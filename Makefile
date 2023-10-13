@@ -2,8 +2,7 @@ OBJS += src/main.o src/arghandler.o src/logging.o
 OUT ?= build/tcap
 DBGOUT ?= debug/tcap
 
-CC = gcc
-CCLD = gcc
+CCLD = $(CC)
 WFLAGS += -Wall -Wextra -Wpedantic -Werror
 CFLAGS += -O2
 LFLAGS += 
