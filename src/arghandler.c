@@ -46,7 +46,8 @@ void pad_space(unsigned long number) {
 }
 
 void help(const char *av0) {
-  printf("Usage for %s: %s <--help> <operation> [<file>]\n", av0, av0);
+
+  printf("Usage for %s: %s [--help] <operation> [<file>]\n", av0, av0);
 
   puts("\tOperations:");
   puts("\t\tc / capture: Input lines into stdio and print them with a "

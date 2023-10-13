@@ -1,14 +1,13 @@
 #include "arghandler.h"
 #include "logging.h"
-#include <assert.h>
 #include <errno.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 
 void capture_func(void) {
@@ -184,6 +183,12 @@ void LOG_BUG(int ac, char **av, struct Arguments args) {
 }
 
 int main(int ac, char *av[]) {
+  time_t t = time(NULL);
+  struct tm *time = localtime(&t);
+  if (time->tm_mon == 4 && time->tm_mday == 1) {
+    av[0] = "tcapitate";
+  }
+
   struct Arguments args = handle_args(ac, (const char **)av);
 
   if (args.aerror != AERROR_NONE) {
