@@ -173,13 +173,13 @@ void LOG_BUG(int ac, char **av, struct Arguments args) {
 
   puterr("");
 
-  LOG_ERROR("Initiating core dump with signal %i...", SIGABRT);
-  kill(getpid(), SIGABRT);
+  LOG_ERROR("Initiating core dump...");
+  abort();
 
   while (1) {
     LOG_ERROR("!! BUG DETECTED !!");
     LOG_ERROR("!! SIGNAL DID NOT KILL PROCESS !!");
-    kill(getpid(), SIGSEGV);
+    abort();
   }
 }
 
