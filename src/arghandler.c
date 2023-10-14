@@ -112,7 +112,7 @@ c_check:
   /* Check if operation is capture */
   if (!strcmp(av[1], "c") || !strcmp(av[1], "capture")) {
     if (ac > 2) {
-      puterr("Error: Excess Element(s) at end of argument list!");
+      LOG_ERROR("Excess Element(s) at end of argument list!");
 
       /* Fancy shmancy Formatting stuff */
       printerr("-> %s %s ", av[0], av[1]);

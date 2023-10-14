@@ -71,7 +71,7 @@ int replay_func(FILE *ofptr) {
   /* Read file content */
   char *fcontent = (char *)malloc(fsize * sizeof(char));
   if (!fcontent) {
-    perror("Error: Couldn't allocate memory for input file");
+    LOG_ERROR("Could not allocate memory for input file: %s", strerror(errno));
 
     fclose(ofptr);
 
@@ -82,9 +82,9 @@ int replay_func(FILE *ofptr) {
   fclose(ofptr);
 
   if (read < fsize) {
-    printerr("Error: Could only read %lu of %lu bytes!\n", read, fsize);
+    LOG_ERROR("Could only read %lu of %lu bytes!", read, fsize);
     if (!read) {
-      perror("Error: Couldn't read input file");
+      LOG_ERROR("Could not read input file: %s", strerror(errno));
     }
 
     free(fcontent);
@@ -130,10 +130,8 @@ int replay_func(FILE *ofptr) {
     cline++;
 
     if (endptr < fcontent + cchar + 16) {
-      fprintf(
-          stderr,
-          "Error: Couldn't convert character %lu in line %lu to a number!\n",
-          fcontent + cchar - endptr, cline);
+      LOG_ERROR("Could not convert character %lu in line %lu to a number!",
+                fcontent + cchar - endptr, cline);
 
       free(times);
       free(fcontent);
