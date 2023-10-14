@@ -5,7 +5,7 @@ DBGOUT ?= debug/tcap
 CCLD = $(CC)
 WFLAGS += -Wall -Wextra -Wpedantic -Werror
 CFLAGS += -O2
-LFLAGS += 
+LFLAGS ?= -s
 
 CFLAGS_FILE ?= compile_flags.txt
 
@@ -20,28 +20,25 @@ all : $(OUT)
 $(OUT): $(OBJS)
 	@mkdir -p build
 	@echo -e "\tCCLD $(OBJS)"
-	@$(CCLD) $(LFLAGS) -s $(OBJS) -o $(OUT)
+	@$(CCLD) $(LFLAGS) $(OBJS) -o $(OUT)
 	
 	@echo ""
 	@echo "Output: $(OUT)"
 	@echo "Finished."
 
-debug: $(OBJS)
+
+debug: 
 	@mkdir -p debug
-	
-	@echo -e "\tCCLD $(OBJS)"
-	@$(CCLD) $(LFLAGS) -g3 $(OBJS) -o $(DBGOUT)
+	@rm -f $(DBGOUT)
+	@CFLAGS+="-Ddebug" LFLAGS+="-g3" OUT=$(DBGOUT) $(MAKE)
 
-	@echo ""
-	@echo "Output: $(DBGOUT)"
-	@echo "Finished."
-
-.PHONY: clean gen_cflags
+.PHONY: clean gen_cflags debug
 
 clean:
 	@echo -e "\tRM $(OBJS) $(OUT) build"
 	@rm -f $(OBJS) $(OUT)
 	@rm -rf build/
+	@rm -rf debug/
 
 gen_cflags:
 	@echo $(WFLAGS) $(CFLAGS) $(LFLAGS) | sed -z 's/ /\n/g' | tee $(CFLAGS_FILE)
